@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 200;
+  src: url(https://fonts.gstatic.com/s/sourcesanspro/v14/6xKydSBYKcSV-LCoeQqfX1RYOo3i94_wlxdr.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 300;
+  src: url(https://fonts.gstatic.com/s/sourcesanspro/v14/6xKydSBYKcSV-LCoeQqfX1RYOo3ik4zwlxdr.ttf) format('truetype');
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-weight: 300;
+}
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: white;
+  font-weight: 300;
+  height: 350px;
+  width: 800px;
+  overflow: hidden;
+
+  background: #50a3a2;
+  background: -webkit-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
+  background: -moz-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
+  background: -o-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
+  background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
+}
+body ::-webkit-input-placeholder {
+  /* WebKit browsers */
+  font-family: 'Source Sans Pro', sans-serif;
+  color: white;
+  font-weight: 300;
+}
+
+.wrapper {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  overflow-y: scroll;
+  width: 100%;
+  height: 100%;
+  padding: 32px 0;
+}
+
+.wrapper-gone {
+    display: none;
+}
+
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.switcher {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: medium;
+}
+
+h1 {
+  font-size: 40px;
+  font-weight: 200;
+  margin-bottom: 56px;
+}
+
+form {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+}
+
+    
+    input {
+        appearance: none;
+        outline: 0;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        background-color: rgba(255, 255, 255, 0.2);
+        width: 250px;
+        border-radius: 3px;
+        padding: 10px 15px;
+        margin: 0 auto 10px auto;
+        display: block;
+        text-align: center;
+        font-size: 18px;
+        color: white;
+        transition-duration: 0.25s;
+        font-weight: 300;
+    }
+    input:hover {
+        background-color: rgba(255, 255, 255, 0.4);
+    }
+    .no-exp:focus {
+        width: 250px;
+    }
+    input:focus {
+        background-color: white;
+        width: 300px;
+        color: #53e3a6;
+    }
+    button {
+        appearance: none;
+        outline: 0;
+        background-color: white;
+        border: 0;
+        padding: 10px 15px;
+        color: #53e3a6;
+        border-radius: 3px;
+        width: 250px;
+        cursor: pointer;
+        font-size: 18px;
+        transition-duration: 0.25s;
+    }
+    button:hover {
+        background-color: #f5f7f9;
+    }
+
+
+    .cancel {
+        cursor: pointer;
+        margin: 8px;
+        height: 16px;
+        width: 16px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 0.4);
+        line-height: 0.8;
+    }
+    .cancel:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+
+</style>
+<body>
+
+    <div id="page1" class="wrapper ">
+        <div class="container">
+            <h1>Post Given</h1>
+            <input type="text" id="enterCode" placeholder="Enter Code">
+            <button type="submit" id="submitCode">Follow</button>
+        </div>
+
+        <div id="switcher" class="switcher">
+            Create Your Own Rules
+        </div>        
+    
+    </div>
+
+    <div id="page2" class="wrapper wrapper-gone">
+        <div class="container">
+            <form style="margin-bottom: 32px;" class="form">
+                <input disabled id="userCode" class="no-exp" type="text" style="margin: 0;" placeholder="Your Code">
+                <button type="submit" style="margin-left: 12px;" id="generateCode">Generate Code</button>
+            </form>
+            
+            <div id='rulesContainer' style="padding: 6px 16px; margin: 16px; border-radius: 16px; margin-right: -16px;">
+                <form class="form">
+                    <input id="ruleDomain1" class="no-exp" type="text" placeholder="Site">
+                    <input id="ruleRedirect1" class="no-exp" type="text" style="margin-left: 12px;" placeholder="Redirect">
+                    <div id="ruleCancel1" class="cancel">x</div>
+                </form>
+            </div>
+    
+            <div style="display: flex; margin-top: 32px; padding-bottom: 32px;">
+                <button type="submit" id="addRule">Add New Rule</button>
+                <button type="submit" style="margin-left: 16px;" id="saveRule">Save</button>
+            </div>
+        </div>
+
+
+        <div id="switcherback" class="switcher">
+           Follow Someone
+        </div>
+    
+    </div>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-firestore.js"></script>
+
+   
+    <script src="popup.js"></script>
+    
+</body>
+</html>
